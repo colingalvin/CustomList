@@ -10,6 +10,9 @@ namespace MyCustomList
     {
         static void Main(string[] args)
         {
+            CustomList<char> list = new CustomList<char>();
+            Console.WriteLine(list.Count);
+            Console.WriteLine(list.Capacity);
         }
     }
 }
