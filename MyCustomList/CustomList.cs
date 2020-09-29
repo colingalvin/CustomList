@@ -6,22 +6,17 @@ using System.Threading.Tasks;
 
 namespace MyCustomList
 {
-    class CustomList<T> where T : new()
+    class CustomList<T>
     {
         // member variables
         private T[] list;
+        private int count;
+        private int capacity;
+
         public int Count
         {
             get
             {
-                int count = 0;
-                foreach(T obj in list)
-                {
-                    if(!obj.Equals(default(T)))
-                    {
-                        count++;
-                    }
-                }
                 return count;
             }
         }
@@ -29,14 +24,33 @@ namespace MyCustomList
         {
             get
             {
-                return list.Length; // can't use array methods?
+                return capacity;
+            }
+        }
+        
+        // indexer
+        public T this[int index]
+        {
+            get
+            {
+                //if (index >0 && index <= capacity) // If index is within bounds of capacity
+                {
+                    return list[index];
+                }
+                //else
+                //{
+                //    // Need to add verification that user cannot access out-of-bounds index
+                //    return;
+                //}
             }
         }
 
         // constructor
         public CustomList()
         {
-            list = new T[5]; // Initially instantiate array of length 5
+            count = 0;
+            capacity = 4;
+            list = new T[capacity];
         }
        
         // member methods

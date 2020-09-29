@@ -8,7 +8,7 @@ namespace MyCustomListUnitTests
     public class AddMethodTests
     {
         [TestMethod]
-        public void Add_AddIntToList_AddInt5_()
+        public void TestMethod1()
         {
         }
     }
