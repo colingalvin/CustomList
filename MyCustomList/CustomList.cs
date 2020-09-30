@@ -69,6 +69,27 @@ namespace MyCustomList
             count++; // increment count
         }
 
+        private T[] Resize(T[] oldArray)
+        {
+            T[] temporaryArray = new T[capacity]; // Create temporary array to store old values
+            int i = 0;
+            foreach(T item in oldArray)
+            {
+                temporaryArray[i] = oldArray[i]; // Copy old array into temp
+                i++;
+            }
+
+            T[] newArray = new T[capacity *= 2]; // Create new array (2x size) for old and new values
+            i = 0;
+            foreach (T item in temporaryArray)
+            {
+                newArray[i] = temporaryArray[i]; // Copy old array into temp
+                i++;
+            }
+
+            return newArray;
+        }
+
         public bool Remove(T value)
         {
             bool remove = false;
@@ -85,13 +106,13 @@ namespace MyCustomList
 
             if(remove == true)
             {
-                items = Rebuild(items, i);
+                items = RemoveAndRebuild(items, i);
                 count--;
             }
             return remove;
         }
 
-        private T[] Rebuild(T[] oldArray, int skipIndex)
+        private T[] RemoveAndRebuild(T[] oldArray, int skipIndex)
         {
             T[] newArray = new T[capacity];
             int i = 0;
@@ -113,25 +134,24 @@ namespace MyCustomList
             return newArray;
         }
 
-        private T[] Resize(T[] oldArray)
+        public override string ToString()
         {
-            T[] temporaryArray = new T[capacity]; // Create temporary array to store old values
-            int i = 0;
-            foreach(T item in oldArray)
+            string returnString;
+            if(count == 0)
             {
-                temporaryArray[i] = oldArray[i]; // Copy old array into temp
-                i++;
+                returnString = "";
+                return returnString;
             }
-
-            T[] newArray = new T[capacity *= 2]; // Create new array (2x size) for old and new values
-            i = 0;
-            foreach (T item in temporaryArray)
+            else
             {
-                newArray[i] = temporaryArray[i]; // Copy old array into temp
-                i++;
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < count; i++)
+                {
+                    stringBuilder.Append(items[i]);
+                }
+                returnString = stringBuilder.ToString();
+                return returnString;
             }
-
-            return newArray;
         }
     }
 }

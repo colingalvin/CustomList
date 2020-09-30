@@ -115,5 +115,57 @@ namespace MyCustomListUnitTests
 
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod] // Test 6
+        public void Remove_Add6IntValues_Remove1Item_CapacityEquals8()
+        {
+            // Arrange
+
+            CustomList<int> list = new CustomList<int>();
+            int value1 = 1;
+            int expected = 8;
+            int actual;
+
+            // Act
+
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Remove(value1);
+            actual = list.Capacity;
+
+            // Assert
+
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod] // Test 7
+        public void Remove_Add6IntValues_Remove1Item_CountEquals5()
+        {
+            // Arrange
+
+            CustomList<int> list = new CustomList<int>();
+            int value1 = 1;
+            int expected = 5;
+            int actual;
+
+            // Act
+
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Add(value1);
+            list.Remove(value1);
+            actual = list.Count;
+
+            // Assert
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
