@@ -153,5 +153,90 @@ namespace MyCustomList
                 return returnString;
             }
         }
+
+        public CustomList<T> Zip(CustomList<T> list1, CustomList<T> list2) // Store result in new list
+        {
+            CustomList<T> newList = new CustomList<T>();
+
+            if(list1.Count < list2.Count) // list1 shorter than list2
+            {
+                int carryover = 0;
+                for (int i = 0; i < list1.Count; i++) // Alternate adding until list1 exhausted
+                {
+                    newList.Add(list1[i]);
+                    newList.Add(list2[i]);
+                    carryover++;
+                }
+                for (int j = carryover; j < list2.Count; j++) // Continue adding rest of list 2
+                {
+                    newList.Add(list2[j]);
+                }
+            }
+            else if(list1.Count > list2.Count) // list1 longer than list2
+            {
+                int carryover = 0;
+                for (int i = 0; i < list2.Count; i++) // Alternate adding until list2 exhausted
+                {
+                    newList.Add(list1[i]);
+                    newList.Add(list2[i]);
+                    carryover++;
+                }
+                for (int j = carryover; j < list1.Count; j++) // Continue adding rest of list1
+                {
+                    newList.Add(list1[j]);
+                }
+            }
+            else // If counts equal
+            {
+                for (int i = 0; i < list1.Count; i++)
+                {
+                    newList.Add(list1[i]);
+                    newList.Add(list2[i]);
+                }
+            }
+            return newList;
+        }
+
+        public static CustomList<T> operator +(CustomList<T> list1, CustomList<T> list2)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                newList.Add(list1[i]);
+            }
+            for (int i = 0; i < list2.Count; i++)
+            {
+                newList.Add(list2[i]);
+            }
+            return newList;
+        }
+
+        public static CustomList<T> operator -(CustomList<T> list1, CustomList<T> list2)
+        {
+            CustomList<T> newList = new CustomList<T>();
+            for (int i = 0; i < list1.Count; i++)
+            {
+                bool containsSameValue = false;
+                T value = default;
+                for (int j = 0; j < list2.Count; j++)
+                {
+                    if (list1[i].Equals(list2[j]))
+                    {
+                        containsSameValue = true;
+                        value = list2[j];
+                    }
+                }
+                if (containsSameValue)
+                {
+                    list2.Remove(value);
+                    continue;
+                }
+                else
+                {
+                    newList.Add(list1[i]);
+                }
+            }
+            return newList;
+        }
     }
 }
