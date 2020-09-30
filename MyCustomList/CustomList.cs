@@ -69,6 +69,50 @@ namespace MyCustomList
             count++; // increment count
         }
 
+        public bool Remove(T value)
+        {
+            bool remove = false;
+            int i = 0;
+            foreach(T item in items) // Identify first instance of value, break and save index of that value
+            {
+                if(items[i].Equals(value))
+                {
+                    remove = true;
+                    break;
+                }
+                i++;
+            }
+
+            if(remove == true)
+            {
+                items = Rebuild(items, i);
+                count--;
+            }
+            return remove;
+        }
+
+        private T[] Rebuild(T[] oldArray, int skipIndex)
+        {
+            T[] newArray = new T[capacity];
+            int i = 0;
+            int count = 0;
+            foreach (T item in oldArray)
+            {
+                if (i == skipIndex)
+                {
+                    i++;
+                    continue;
+                }
+                else
+                {
+                    newArray[count] = oldArray[i]; // Copy old array into new array
+                    count++;
+                    i++;
+                }
+            }
+            return newArray;
+        }
+
         private T[] Resize(T[] oldArray)
         {
             T[] temporaryArray = new T[capacity]; // Create temporary array to store old values
