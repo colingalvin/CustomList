@@ -34,20 +34,19 @@ namespace MyCustomList
         {
             get
             {
-                //if (index >0 && index <= capacity) // If index is within bounds of capacity
+                if (index >= 0 && index <= count)
                 {
                     return items[index];
                 }
-                //else
-                //{
-                //    // Need to add verification that user cannot access out-of-bounds index
-                //    return;
-                //}
+                else // Index doesn't exist
+                {
+                    Console.WriteLine("You are attempting to access an index which does not exist.");
+                    return default(T);
+                }
             }
         }
 
         // constructor
-
         public CustomList()
         {
             count = 0;
@@ -56,14 +55,11 @@ namespace MyCustomList
         }
         
         // member methods
-
-        // Add
-
         public void Add(T value)
         {
-            if (Capacity == Count) // check for resize
+            if (Capacity == Count) // check if underlying array needs to be resized
             {
-                items = Resize(items);
+                items = Resize(items); // returns original values stored in larger array
             }
             items[count] = value; // add new item to underlying array at count index
             count++; // increment count
@@ -71,22 +67,13 @@ namespace MyCustomList
 
         private T[] Resize(T[] oldArray)
         {
-            T[] temporaryArray = new T[capacity]; // Create temporary array to store old values
+            T[] newArray = new T[capacity *= 2]; // Create new array (2x size)
             int i = 0;
-            foreach(T item in oldArray)
+            foreach (T item in oldArray)
             {
-                temporaryArray[i] = oldArray[i]; // Copy old array into temp
+                newArray[i] = oldArray[i]; // Copy old array into new array
                 i++;
             }
-
-            T[] newArray = new T[capacity *= 2]; // Create new array (2x size) for old and new values
-            i = 0;
-            foreach (T item in temporaryArray)
-            {
-                newArray[i] = temporaryArray[i]; // Copy old array into temp
-                i++;
-            }
-
             return newArray;
         }
 
@@ -94,34 +81,33 @@ namespace MyCustomList
         {
             bool remove = false;
             int i = 0;
-            foreach(T item in items) // Identify first instance of value, break and save index of that value
+            foreach(T item in items)
             {
-                if(items[i].Equals(value))
+                if(items[i].Equals(value)) // Identify first instance of common value
                 {
                     remove = true;
-                    break;
+                    break; // Break loop, save index of common value
                 }
                 i++;
             }
-
             if(remove == true)
             {
-                items = RemoveAndRebuild(items, i);
+                items = RemoveAndRebuild(items, i); // Remove instance of common value, rebuild rest of array
                 count--;
             }
-            return remove;
+            return remove; // Return bool of whether remove occurred
         }
 
         private T[] RemoveAndRebuild(T[] oldArray, int skipIndex)
         {
-            T[] newArray = new T[capacity];
+            T[] newArray = new T[capacity]; // Create new array of same capacity
             int i = 0;
             int count = 0;
             foreach (T item in oldArray)
             {
-                if (i == skipIndex)
+                if (i == skipIndex) // Do not copy first instance of common value into new array
                 {
-                    i++;
+                    i++; // Increment to skip first instance of common value in old array
                     continue;
                 }
                 else
@@ -137,7 +123,7 @@ namespace MyCustomList
         public override string ToString()
         {
             string returnString;
-            if(count == 0)
+            if(count == 0) // Return empty string if list is empyu
             {
                 returnString = "";
                 return returnString;
@@ -154,9 +140,10 @@ namespace MyCustomList
             }
         }
 
+        // Combine two lists in alternating fashion
         public CustomList<T> Zip(CustomList<T> list1, CustomList<T> list2) // Store result in new list
         {
-            CustomList<T> newList = new CustomList<T>();
+            CustomList<T> newList = new CustomList<T>(); // Store result in new list
 
             if(list1.Count < list2.Count) // list1 shorter than list2
             {
@@ -188,7 +175,7 @@ namespace MyCustomList
             }
             else // If counts equal
             {
-                for (int i = 0; i < list1.Count; i++)
+                for (int i = 0; i < list1.Count; i++) // Alternate adding until both lists exhausted
                 {
                     newList.Add(list1[i]);
                     newList.Add(list2[i]);
@@ -197,6 +184,7 @@ namespace MyCustomList
             return newList;
         }
 
+        // Combine two lists together in sequence
         public static CustomList<T> operator +(CustomList<T> list1, CustomList<T> list2)
         {
             CustomList<T> newList = new CustomList<T>();
@@ -211,29 +199,30 @@ namespace MyCustomList
             return newList;
         }
 
+        // Remove single, common instances between two lists from primary list; store in new list
         public static CustomList<T> operator -(CustomList<T> list1, CustomList<T> list2)
         {
             CustomList<T> newList = new CustomList<T>();
-            for (int i = 0; i < list1.Count; i++)
+            for (int i = 0; i < list1.Count; i++) // Iterate through list1
             {
                 bool containsSameValue = false;
                 T value = default;
-                for (int j = 0; j < list2.Count; j++)
+                for (int j = 0; j < list2.Count; j++) // Iterate through list2
                 {
-                    if (list1[i].Equals(list2[j]))
+                    if (list1[i].Equals(list2[j])) // Identify common instance between lists
                     {
                         containsSameValue = true;
-                        value = list2[j];
+                        value = list2[j]; // Store value
                     }
                 }
                 if (containsSameValue)
                 {
-                    list2.Remove(value);
-                    continue;
+                    list2.Remove(value); // Remove common value from list2
+                    continue; // Do not write common value into new list
                 }
                 else
                 {
-                    newList.Add(list1[i]);
+                    newList.Add(list1[i]); // Write original value into new list
                 }
             }
             return newList;
