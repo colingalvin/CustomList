@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MyCustomList
 {
-    public class CustomList<T>
+    public class CustomList<T> : IEnumerable
     {
         // member variables
         private T[] items;
@@ -40,9 +42,12 @@ namespace MyCustomList
                 }
                 else // Index doesn't exist
                 {
-                    Console.WriteLine("You are attempting to access an index which does not exist.");
-                    return default(T);
+                    throw new IndexOutOfRangeException(); // Write Unit Tests for this
                 }
+            }
+            set
+            {
+                items[index] = value;
             }
         }
 
@@ -55,6 +60,15 @@ namespace MyCustomList
         }
         
         // member methods
+
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return items[i];
+            }
+        }
+
         public void Add(T value)
         {
             if (Capacity == Count) // check if underlying array needs to be resized
@@ -199,33 +213,14 @@ namespace MyCustomList
             return newList;
         }
 
-        // Remove single, common instances between two lists from primary list; store in new list
+        // Remove single, common instances between two lists from primary list
         public static CustomList<T> operator -(CustomList<T> list1, CustomList<T> list2)
         {
-            CustomList<T> newList = new CustomList<T>();
-            for (int i = 0; i < list1.Count; i++) // Iterate through list1
+            for (int i = 0; i < list2.Count; i++)
             {
-                bool containsSameValue = false;
-                T value = default;
-                for (int j = 0; j < list2.Count; j++) // Iterate through list2
-                {
-                    if (list1[i].Equals(list2[j])) // Identify common instance between lists
-                    {
-                        containsSameValue = true;
-                        value = list2[j]; // Store value
-                    }
-                }
-                if (containsSameValue)
-                {
-                    list2.Remove(value); // Remove common value from list2
-                    continue; // Do not write common value into new list
-                }
-                else
-                {
-                    newList.Add(list1[i]); // Write original value into new list
-                }
+                list1.Remove(list2[i]);
             }
-            return newList;
+            return list1;
         }
     }
 }

@@ -2,8 +2,8 @@ CustomList<T> "-" Operator
 
 Namespace: System.MyCustomList
 
-Systematically removes common instances of type T found within the list2 from the list1.
-Returns the remaining instances of type T as a new list.
+Systematically removes single, common instances of type T found within list2 from list1.
+Returns the remaining unique instances of type T from list1 as a new list.
 
 Syntax:
 	C#: CustomList<T> newList = list1 - list2;
@@ -12,13 +12,13 @@ Syntax:
 
 Parameters:
 
-	The - operator functions between any two declared or instantiated lists of type T. Lists do not need to contain any values in order for the - operator to function.
+	The "-" operator functions between any two instantiated CustomList<T> objects. Lists do not need to contain any values in order to function with the "-" operator.
 
 
 
 Returns: CustomList<T>
 
-	Any single value common to both list1 and list2 will be deleted from list1 at a ratio of 1:1. Any duplicate values found in list1 will not be deleted unless a second common value is found in list2. The resulting list will contain the values unique to list1 after being compared to the entirely of list2.
+	Any single value common to both list1 and list2 will be removed from list1 at a ratio of 1:1. Duplicate common values found in list1 will not be deleted unless an additional duplicate common value is found in list2. The resulting list will contain the values unique to list1 after being compared to the entirely of list2.
 
 
 
