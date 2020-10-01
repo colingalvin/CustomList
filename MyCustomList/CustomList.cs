@@ -36,18 +36,33 @@ namespace MyCustomList
         {
             get
             {
-                if (index >= 0 && index <= count)
+                if (count == 0)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                else if (index >= 0 && index < count)
                 {
                     return items[index];
                 }
-                else // Index doesn't exist
+                else
                 {
-                    throw new IndexOutOfRangeException(); // Write Unit Tests for this
+                    throw new IndexOutOfRangeException();
                 }
             }
             set
             {
-                items[index] = value;
+                if (count == 0)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+                else if (index >= 0 && index < count)
+                {
+                    items[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                }
             }
         }
 
