@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MyCustomList
 {
-    public class CustomList<T> : IEnumerable
+    public class CustomList<T> : IEnumerable, IComparable<T>
     {
         // member variables
         private T[] items;
@@ -236,6 +238,47 @@ namespace MyCustomList
                 list1.Remove(list2[i]);
             }
             return list1;
+        }
+
+        public static void Sort(CustomList<int> array) // where T : IComparable<T>
+        {
+            int temp = 0;
+
+            for (int write = 0; write < array.Count; write++)
+            {
+                for (int sort = 0; sort < array.Count - 1; sort++)
+                {
+                    if (array[sort] > array[sort + 1])
+                    {
+                        temp = array[sort + 1];
+                        array[sort + 1] = array[sort];
+                        array[sort] = temp;
+                    }
+                }
+            }
+        }
+
+        public static void Sort(CustomList<double> array) // where T : IComparable<T>
+        {
+            double temp = 0;
+
+            for (int write = 0; write < array.Count; write++)
+            {
+                for (int sort = 0; sort < array.Count - 1; sort++)
+                {
+                    if (array[sort] > array[sort + 1])
+                    {
+                        temp = array[sort + 1];
+                        array[sort + 1] = array[sort];
+                        array[sort] = temp;
+                    }
+                }
+            }
+        }
+
+        public int CompareTo(T other)
+        {
+            throw new NotImplementedException();
         }
     }
 }

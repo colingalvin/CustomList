@@ -18,7 +18,8 @@ Parameters:
 
 Returns: CustomList<T>
 
-	Any single value common to both list1 and list2 will be removed from list1 at a ratio of 1:1. Duplicate common values found in list1 will not be deleted unless an additional duplicate common value is found in list2. The resulting list will contain the values unique to list1 after being compared to the entirely of list2.
+	When applied, the "-" operator attempts to sequentially remove each value contained within list2 from all values contained within list1. For any single value in list2 that is found in list1, the first instance of said value will be removed from list1; for any single value in list2 that is not found in list1, list1 will remain unchanged. The sequence continues with the next value in list2 until all list2 values are exhausted.
+	Values are removed at a ratio of 1:1. Any single value in list2 that is found in list1 will cause only the first occurence of that value to be removed from list1. Multiple values can be removed from list1 throughout the application of the "-" operator as long as separate, corresponding values exist in list2 (this rule applies equally to instances of duplicate values.)
 
 
 

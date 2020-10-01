@@ -39,7 +39,7 @@ namespace MyCustomListUnitTests
             // Act
             list1.Add('a');
             list1.Add('b');
-            Console.WriteLine(list1[2]);
+            Console.WriteLine(list1[-1]);
         }
 
         [TestMethod] // Test 4
@@ -65,9 +65,7 @@ namespace MyCustomListUnitTests
 
             // Act
             list1.Add(true);
-            list1.Add(false);
-            list1.Add(true);
-            actual = list1[2].ToString();
+            actual = list1[0].ToString();
 
             // Assert
             Assert.AreEqual(expected, actual);
@@ -78,14 +76,13 @@ namespace MyCustomListUnitTests
         {
             // Arrange
             CustomList<bool> list1 = new CustomList<bool>();
-            string expected = "TrueFalseTrue";
+            string expected = "TrueTrue";
             string actual;
 
             // Act
             list1.Add(true);
             list1.Add(false);
-            list1.Add(true);
-            list1[2] = list1[0];
+            list1[1] = list1[0];
             actual = list1.ToString();
 
             // Assert
