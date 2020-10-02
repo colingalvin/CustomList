@@ -75,7 +75,14 @@ namespace MyCustomList
             capacity = 4;
             items = new T[capacity];
         }
-        
+
+        public CustomList(int capacity)
+        {
+            count = 0;
+            this.capacity = capacity;
+            items = new T[capacity];
+        }
+
         // member methods
 
         public IEnumerator GetEnumerator()
@@ -229,6 +236,34 @@ namespace MyCustomList
                 }
                 items[Count] = default; // Not necessary, but nice?
                 count--;
+            }
+        }
+
+        public void TrimExcess()
+        {
+            if(Count == 0) // If array is empty
+            {
+                T[] newArray = new T[0];
+                items = newArray;
+                count = 0;
+                capacity = 0;
+            }
+            else if((Count * 0.9) > Capacity || Capacity == 4) // If more than 90% of capacity being used
+            {
+                return; // Do nothing
+            }
+            else
+            {
+                int newMax = Count;
+                T[] newArray = new T[Count];
+                int i = 0;
+                foreach  (T item in items)
+                {
+                    newArray[i] = item;
+                }
+                items = newArray;
+                count = newMax;
+                capacity = newMax;
             }
         }
 
