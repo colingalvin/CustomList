@@ -6,7 +6,7 @@ using MyCustomList;
 namespace MyCustomListUnitTests
 {
     [TestClass]
-    public class SortTests
+    public class BubbleSortTests
     {
         [TestMethod] // Test 1
         public void Sort_List135246_ReturnList123456()
@@ -23,7 +23,7 @@ namespace MyCustomListUnitTests
             list1.Add(2);
             list1.Add(4);
             list1.Add(6);
-            CustomList<int>.Sort(list1);
+            CustomList<int>.BubbleSort(list1);
             actual = list1.ToString();
 
             // Assert
@@ -43,7 +43,7 @@ namespace MyCustomListUnitTests
             list1.Add(2.2);
             list1.Add(1.1);
             list1.Add(3.3);
-            CustomList<double>.Sort(list1);
+            CustomList<double>.BubbleSort(list1);
             actual = list1.ToString();
 
             // Assert
@@ -65,7 +65,7 @@ namespace MyCustomListUnitTests
             list1.Add('b');
             list1.Add('C');
             list1.Add('c');
-            CustomList<char>.Sort(list1);
+            CustomList<char>.BubbleSort(list1);
             actual = list1.ToString();
 
             // Assert
@@ -85,7 +85,7 @@ namespace MyCustomListUnitTests
             list1.Add(false);
             list1.Add(true);
             list1.Add(false);
-            CustomList<bool>.Sort(list1);
+            CustomList<bool>.BubbleSort(list1);
             actual = list1.ToString();
 
             // Assert
@@ -103,7 +103,7 @@ namespace MyCustomListUnitTests
             // Act
             list1.Add("World");
             list1.Add("Hello");
-            CustomList<string>.Sort(list1);
+            CustomList<string>.BubbleSort(list1);
             actual = list1.ToString();
 
             // Assert

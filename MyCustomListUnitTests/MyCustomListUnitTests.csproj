@@ -55,7 +55,8 @@
     <Compile Include="IndexerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoveMethodTests.cs" />
-    <Compile Include="SortTests.cs" />
+    <Compile Include="BubbleSortTests.cs" />
+    <Compile Include="SelectionSortTests.cs" />
     <Compile Include="SubtractOperatorTests.cs" />
     <Compile Include="ToStringMethodTests.cs" />
     <Compile Include="ZipMethodTests.cs" />

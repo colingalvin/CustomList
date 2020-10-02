@@ -245,21 +245,49 @@ namespace MyCustomList
             return newList;
         }
 
-        public static void Sort(CustomList<T> array)
+        public static void BubbleSort(CustomList<T> list)
         {
             T temp;
-            for (int write = 0; write < array.Count; write++)
+            for (int i = 0; i < list.Count; i++) // Iterate through list (Count) times
             {
-                for (int sort = 0; sort < array.Count - 1; sort++)
+                for (int j = 0; j < list.Count - 1; j++) // Compare first element to second element
                 {
-                    if (Comparer<T>.Default.Compare(array[sort], array[sort + 1]) > 0)
+                    if (Comparer<T>.Default.Compare(list[j], list[j + 1]) > 0) // If item1 > item2
                     {
-                        temp = array[sort + 1];
-                        array[sort + 1] = array[sort];
-                        array[sort] = temp;
+                        temp = list[j + 1]; // Store value of small item
+                        list[j + 1] = list[j]; // Move large item to the right
+                        list[j] = temp; // Reassign small item to the left
                     }
                 }
             }
         }
+
+        public static void SelectionSort(CustomList<T> list)
+        {
+            T temp;
+            for (int i = 0; i < list.Count; i++) // Start at 0 index
+            {
+                int k = IntArrayMin(list, i); // Returns index of smallest item found
+                if (k != i) // Do nothing if item on left is smallest
+                {
+                    temp = list[i]; // Store larger item
+                    list[i] = list[k]; // Copy smaller item to left-most unsorted spot
+                    list[k] = temp; // Reassign larger item to swapped spot on right
+                } // Repeat process, starting from nest left-most unsorted item
+            }
+        }
+
+        private static int IntArrayMin(CustomList<T> list, int start)
+        {
+            int minPos = start; // Start with left-most unchecked item
+            for (int pos = start + 1; pos < list.Count; pos++) // Check everything to the right of item
+                if (Comparer<T>.Default.Compare(list[minPos], list[pos]) > 0) // leftItem > rightItem
+                {
+                    minPos = pos; // Reassign to index of smaller item
+                }
+            return minPos; // Return index
+        }
+
+
     }
 }
