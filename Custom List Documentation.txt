@@ -1,9 +1,9 @@
-CustomList<T> "-" Operator
+CustomList<T> - Operator
 
 Namespace: System.MyCustomList
 
 Systematically removes single, common instances of type T found within list2 from list1.
-Returns the remaining unique instances of type T from list1 as a new list.
+Returns the remaining unique instances of type T from list1 as a new CustomList<T>. The values of the operands remain unchanged throughout the application of the - Operator.
 
 Syntax:
 	C#: CustomList<T> newList = list1 - list2;
@@ -12,20 +12,20 @@ Syntax:
 
 Parameters:
 
-	The "-" operator functions between any two instantiated CustomList<T> objects. Lists do not need to contain any values in order to function with the "-" operator.
+	The - Operator functions between any two instantiated CustomList<T> objects. Lists do not need to contain any values in order to function with the - operator.
 
 
 
 Returns: CustomList<T>
 
-	When applied, the "-" operator attempts to sequentially remove each value contained within list2 from all values contained within list1. For any single value in list2 that is found in list1, the first instance of said value will be removed from list1; for any single value in list2 that is not found in list1, list1 will remain unchanged. The sequence continues with the next value in list2 until all list2 values are exhausted.
-	Values are removed at a ratio of 1:1. Any single value in list2 that is found in list1 will cause only the first occurence of that value to be removed from list1. Multiple values can be removed from list1 throughout the application of the "-" operator as long as separate, corresponding values exist in list2 (this rule applies equally to instances of duplicate values.)
+	The - Operator attempts to sequentially remove each value contained within list2 from each individual value contained within list1. For any single value in list2 that is found in list1, the first instance of said value is removed from list1; for any single value in list2 that is not found in list1, list1 remains unchanged. The sequence continues with the next value in list2 until all values have been exhausted.
+    Values are removed at a ratio of 1:1. Any single value in list2 that is found in list1 will cause only the first occurence of that value to be removed from list1. Multiple values can be removed from list1 throughout the application of the - Operator as long as separate, corresponding values exist in list2 (this rule applies equally to instances of duplicate values.)
 
 
 
 Examples:
 
-The following examples demonstrate how to properly implement the - operator on CustomList<T> objects.
+The following examples demonstrate the function and proper implementation of the - Operator on CustomList<T> objects.
 
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace MyCustomList
             CustomList<int> intList1 = new CustomList<int>();
             CustomList<int> intList2 = new CustomList<int>();
 
-            // Add values to each list.
+            // Add values to each list, display contents to console.
             intList1.Add(1);
             intList1.Add(3);
             intList1.Add(5);
@@ -54,7 +54,7 @@ namespace MyCustomList
             intList2.Add(6);
             Console.WriteLine("intList2 contains: " + intList2.ToString());
 
-            // Compare intList1 and intList2, remove common instance of '1' in both lists from intList1.
+            // Compare intList1 and intList2, find and remove common instance of '1' from intList1.
             CustomList<int> newIntList = intList1 - intList2;
             Console.WriteLine("newIntList contains: " + newIntList.ToString());
 
@@ -73,14 +73,16 @@ namespace MyCustomList
 
             boolList1.Add(true);
             boolList1.Add(false);
+	    boolList1.Add(true);
             boolList1.Add(false);
             Console.WriteLine("boolList1 contains: " + boolList1.ToString());
 
             boolList2.Add(false);
             Console.WriteLine("boolList2 contains: " + boolList2.ToString());
 
-            // Compare lists, remove single values common to both lists from boolList1.
-            // Only 1 'false' value will be removed from boolList1 in keeping with the 1:1 ratio of removal.
+            // Compare lists, find common instance of 'false.'
+	    // Since boolList2 contains a single 'false' value,
+	    // only the first instance of 'false' is removed from boolList1.
             CustomList<bool> newBoolList = boolList1 - boolList2;
             Console.WriteLine("newBoolList contains: " + newBoolList.ToString());
 
@@ -88,9 +90,9 @@ namespace MyCustomList
             
             The above code example produces the following output:
               
-                boolList1 contains: TrueFalseFalse
+                boolList1 contains: TrueFalseTrueFalse
                 boolList2 contains: False
-                newBoolList contains: TrueFalse
+                newBoolList contains: TrueTrueFalse
              
             */
 
@@ -106,8 +108,7 @@ namespace MyCustomList
             charList2.Add('d');
             Console.WriteLine("charList2 contains: " + charList2.ToString());
 
-            // Smaller lists may be compared to larger lists.
-            // Compare lists, remove single values common to both lists from charList1.
+            // Lists of different size and in any arrangement may be compared.
             CustomList<char> newCharList = charList1 - charList2;
             Console.WriteLine("newCharList contains: " + newCharList.ToString());
 

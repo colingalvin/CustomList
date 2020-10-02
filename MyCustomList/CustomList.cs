@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MyCustomList
 {
-    public class CustomList<T> : IEnumerable, IComparable<T>
+    public class CustomList<T> : IEnumerable where T : IComparable
     {
         // member variables
         private T[] items;
@@ -233,22 +233,26 @@ namespace MyCustomList
         // Remove single, common instances between two lists from primary list
         public static CustomList<T> operator -(CustomList<T> list1, CustomList<T> list2)
         {
+            CustomList<T> newList = new CustomList<T>();
+            foreach (T item in list1)
+            {
+                newList.Add(item);
+            }
             for (int i = 0; i < list2.Count; i++)
             {
-                list1.Remove(list2[i]);
+                newList.Remove(list2[i]);
             }
-            return list1;
+            return newList;
         }
 
-        public static void Sort(CustomList<int> array) // where T : IComparable<T>
+        public static void Sort(CustomList<T> array)
         {
-            int temp = 0;
-
+            T temp;
             for (int write = 0; write < array.Count; write++)
             {
                 for (int sort = 0; sort < array.Count - 1; sort++)
                 {
-                    if (array[sort] > array[sort + 1])
+                    if (Comparer<T>.Default.Compare(array[sort], array[sort + 1]) > 0)
                     {
                         temp = array[sort + 1];
                         array[sort + 1] = array[sort];
@@ -256,29 +260,6 @@ namespace MyCustomList
                     }
                 }
             }
-        }
-
-        public static void Sort(CustomList<double> array) // where T : IComparable<T>
-        {
-            double temp = 0;
-
-            for (int write = 0; write < array.Count; write++)
-            {
-                for (int sort = 0; sort < array.Count - 1; sort++)
-                {
-                    if (array[sort] > array[sort + 1])
-                    {
-                        temp = array[sort + 1];
-                        array[sort + 1] = array[sort];
-                        array[sort] = temp;
-                    }
-                }
-            }
-        }
-
-        public int CompareTo(T other)
-        {
-            throw new NotImplementedException();
         }
     }
 }

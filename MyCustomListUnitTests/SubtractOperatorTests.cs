@@ -142,5 +142,27 @@ namespace MyCustomListUnitTests
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod] // Test 7
+        public void SubtractOperator_ListTrueFalseFalse_ListFalse_List1CountRemains3()
+        {
+            // Arrange
+            CustomList<bool> list1 = new CustomList<bool>();
+            CustomList<bool> list2 = new CustomList<bool>();
+            CustomList<bool> list3;
+            int expected = 3;
+            int actual;
+
+            // Act
+            list1.Add(true);
+            list1.Add(false);
+            list1.Add(false);
+            list2.Add(false);
+            list3 = list1 - list2;
+            actual = list1.Count;
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
