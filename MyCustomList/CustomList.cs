@@ -305,6 +305,19 @@ namespace MyCustomList
             return minPos; // Return index
         }
 
-
+        public static void InsertionSort(CustomList<T> list)
+        {
+            for (int i = 1; i < list.Count; i++) // Start at index 1 (index 0 assumed to be in the correct place)
+            {
+                // If right index is smaller than index immediately to the left and outside of sorted part of array
+                for (int j = i; j > 0 && Comparer<T>.Default.Compare(list[j], list[j - 1]) < 0; j--)
+                {
+                    T temp;
+                    temp = list[j]; // Store smaller value
+                    list[j] = list[j - 1]; // Reassign larger value to the right
+                    list[j - 1] = temp; // Store smaller value to the left
+                }
+            }
+        }
     }
 }
