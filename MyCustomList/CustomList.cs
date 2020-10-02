@@ -215,6 +215,23 @@ namespace MyCustomList
             return newList;
         }
 
+        public void RemoveAt(int index)
+        {
+            if(index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
+            {
+                for (int i = index; i < Count-1; i++) // Start at removal index
+                {
+                    items[i] = items[i + 1]; // Move all values 1 place to the left
+                }
+                items[Count] = default; // Not necessary, but nice?
+                count--;
+            }
+        }
+
         // Combine two lists together in sequence
         public static CustomList<T> operator +(CustomList<T> list1, CustomList<T> list2)
         {
